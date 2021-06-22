@@ -12,7 +12,7 @@ Acceptable values are any semantic version string like 1.2.0. Use this action in
 ```
 
 The cached Dapr CLI path is added to the PATH environment variable as well as stored in the dapr-path output variable.
-Refer to the action metadata file for details about all the inputs <https://github.com/dapr/setup-dapr/blob/trunk/action.yml>
+Refer to the action metadata file for details about all the inputs <https://github.com/dapr/setup-dapr/blob/main/action.yml>
 
 ## Code of Conduct
 
