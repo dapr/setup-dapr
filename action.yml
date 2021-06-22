@@ -1,0 +1,16 @@
+name: 'Dapr tool installer'
+description: 'Install a specific version of Dapr CLI. Acceptable values are semantic version string like 1.2.0'
+inputs:
+  version:
+    description: 'Version of Dapr CLI to install'
+    required: false
+    default: '1.2.0'
+outputs:
+  dapr-path:
+    description: 'Path to the Dapr CLI'
+branding:
+  color: green
+  icon: server
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

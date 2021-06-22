@@ -1,0 +1,36 @@
+name: "units-test"
+on:
+  # Triggers the workflow on push
+  push:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # unit tests
+  units:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: npm ci
+    - run: npm test
+
+  # test action works running from the graph
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    steps:
+    - uses: actions/checkout@v2
+    # Test that the default version is used
+    - name: Install default version
+      uses: ./
+      if: ${{ matrix.os == 'windows-latest'}}
+    # Test that explicit version is used
+    - name: Install specific version
+      uses: ./
+      if: ${{ matrix.os != 'windows-latest'}}
+      with:
+        version: 1.0.0
+    - name: Run Dapr
+      run: dapr --version
