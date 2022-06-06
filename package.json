@@ -1,5 +1,6 @@
 {
-  "name": "setupdapr",
+  "name": "@dapr/setup",
+  "private": true,
   "version": "0.1.0",
   "description": "Setup Dapr CLI",
   "main": "index.js",
