@@ -31,6 +31,6 @@ jobs:
       uses: ./
       if: ${{ matrix.os != 'windows-latest'}}
       with:
-        version: 1.0.0
+        version: 1.13.0
     - name: Run Dapr
       run: dapr --version
