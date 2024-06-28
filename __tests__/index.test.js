@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const action = require("./action");
+const action = require("../src/action");
 const tc = require("@actions/tool-cache");
 
 describe("run", () => {
@@ -37,7 +37,7 @@ describe("getDaprDownloadURL", () => {
 
     // Assert
     expect(url).toEqual(
-      "https://github.com/dapr/cli/releases/download/v1.0.0/dapr_windows_amd64.zip"
+      "https://github.com/dapr/cli/releases/download/v1.0.0/dapr_windows_amd64.zip",
     );
   });
 
@@ -47,7 +47,7 @@ describe("getDaprDownloadURL", () => {
 
     // Assert
     expect(url).toEqual(
-      "https://github.com/dapr/cli/releases/download/v1.0.0/dapr_linux_amd64.tar.gz"
+      "https://github.com/dapr/cli/releases/download/v1.0.0/dapr_linux_amd64.tar.gz",
     );
   });
 
@@ -57,7 +57,7 @@ describe("getDaprDownloadURL", () => {
 
     // Assert
     expect(url).toEqual(
-      "https://github.com/dapr/cli/releases/download/v1.0.0/dapr_darwin_amd64.tar.gz"
+      "https://github.com/dapr/cli/releases/download/v1.0.0/dapr_darwin_amd64.tar.gz",
     );
   });
 });
@@ -129,7 +129,7 @@ describe("downloadDapr", () => {
       expect(error).toBeInstanceOf(Error);
       expect(error).toHaveProperty(
         "message",
-        "Dapr executable not found in path /dapr/"
+        "Dapr executable not found in path /dapr/",
       );
 
       // Number of calls should be zero because of the error
@@ -160,7 +160,7 @@ describe("downloadDapr", () => {
       expect(error).toBeInstanceOf(Error);
       expect(error).toHaveProperty(
         "message",
-        "Dapr executable not found in path /dapr/"
+        "Dapr executable not found in path /dapr/",
       );
 
       expect(extractTar).toHaveBeenCalledTimes(1);
@@ -187,7 +187,7 @@ describe("downloadDapr", () => {
       expect(error).toBeInstanceOf(Error);
       expect(error).toHaveProperty(
         "message",
-        "Failed to download Dapr from location https://github.com/dapr/cli/releases/download/v1.0.0/dapr_darwin_amd64.tar.gz"
+        "Failed to download Dapr from location https://github.com/dapr/cli/releases/download/v1.0.0/dapr_darwin_amd64.tar.gz",
       );
     }
   });

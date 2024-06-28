@@ -7,7 +7,7 @@ Acceptable values are any semantic version string like 1.2.0. Use this action in
 ```yaml
 - uses: dapr/setup-dapr@v1
   with:
-    version: '<version>' # e.g. 1.13.0 is latest; default is 1.2.0
+    version: "<version>" # e.g. 1.13.0 is latest; default is 1.2.0
   id: install
 ```
 

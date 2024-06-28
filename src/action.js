@@ -47,7 +47,7 @@ async function downloadDapr(currentOs, version) {
       downloadPath = await tc.downloadTool(downloadUrl);
     } catch (exception) {
       throw new Error(
-        util.format("Failed to download Dapr from location", downloadUrl)
+        util.format("Failed to download Dapr from location", downloadUrl),
       );
     }
 
@@ -73,7 +73,7 @@ async function downloadDapr(currentOs, version) {
   const toolPath = findTool(currentOs, cachedToolPath);
   if (!toolPath) {
     throw new Error(
-      util.format("Dapr executable not found in path", cachedToolPath)
+      util.format("Dapr executable not found in path", cachedToolPath),
     );
   }
 
@@ -99,12 +99,12 @@ function findTool(currentOs, rootFolder) {
   fileList = walkSync(
     rootFolder,
     fileList,
-    toolName + getExecutableExtension(currentOs)
+    toolName + getExecutableExtension(currentOs),
   );
 
   if (!fileList || fileList.length == 0) {
     throw new Error(
-      util.format("Dapr executable not found in path", rootFolder)
+      util.format("Dapr executable not found in path", rootFolder),
     );
   } else {
     // Return the first one we find.
@@ -148,7 +148,7 @@ async function run(currentOs, version) {
   }
 
   console.log(
-    `Dapr CLI version: '${version}' has been cached at ${cachedPath}`
+    `Dapr CLI version: '${version}' has been cached at ${cachedPath}`,
   );
 
   // set a an output of this action incase future steps need the path to the tool.
