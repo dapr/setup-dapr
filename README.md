@@ -2,12 +2,12 @@
 
 ## Install a specific version of Dapr CLI on a GitHub Actions runner
 
-Acceptable values are any semantic version string like 1.2.0. Use this action in workflow to define which version of Dapr will be used.
+Acceptable values are any semantic version string like 1.13.0. Use this action in workflow to define which version of Dapr CLI will be used.
 
 ```yaml
 - uses: dapr/setup-dapr@v1
   with:
-    version: "<version>" # e.g. 1.13.0 is latest; default is 1.2.0
+    version: "<version>" # e.g. "1.13.0"
   id: install
 ```
 

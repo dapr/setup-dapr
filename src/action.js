@@ -141,15 +141,15 @@ function walkSync(dir, fileList, fileToFind) {
 // The main function of this action. After the archive is downloaded and
 // extracted this function adds it location to the path. This will make sure
 // other steps in your workflow will be able to call the Dapr CLI.
-async function run(currentOs, daprCliVersion, daprRuntimeVersion) {
-  const cachedPath = await downloadDapr(currentOs, daprCliVersion);
+async function run(currentOs, version) {
+  const cachedPath = await downloadDapr(currentOs, version);
 
   if (!process.env["PATH"].startsWith(path.dirname(cachedPath))) {
     core.addPath(path.dirname(cachedPath));
   }
 
   console.log(
-    `Dapr CLI version: '${daprCliVersion}' has been cached at ${cachedPath}`,
+    `Dapr CLI version: '${version}' has been cached at ${cachedPath}`,
   );
 
   // set a an output of this action incase future steps need the path to the tool.
