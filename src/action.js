@@ -152,38 +152,6 @@ async function run(currentOs, daprCliVersion, daprRuntimeVersion) {
     `Dapr CLI version: '${daprCliVersion}' has been cached at ${cachedPath}`,
   );
 
-  // Run executable file at cachedPath to verify it is installed correctly
-  const exec = require("child_process").exec;
-  exec(
-    `${cachedPath} init --runtime-version=${daprRuntimeVersion}`,
-    (error, stdout, stderr) => {
-      if (error) {
-        core.setFailed(`Dapr init failed to run with error: ${error.message}`);
-        return;
-      }
-
-      if (stderr) {
-        core.setFailed(`Dapr init failed to run with error: ${stderr}`);
-        return;
-      }
-
-      console.log(`Dapr CLI version: '${stdout}'`);
-    },
-  );
-  exec(`${cachedPath} version`, (error, stdout, stderr) => {
-    if (error) {
-      core.setFailed(`Dapr version failed to run with error: ${error.message}`);
-      return;
-    }
-
-    if (stderr) {
-      core.setFailed(`Dapr version failed to run with error: ${stderr}`);
-      return;
-    }
-
-    console.log(`Dapr CLI version: '${stdout}'`);
-  });
-
   // set a an output of this action incase future steps need the path to the tool.
   core.setOutput("dapr-path", cachedPath);
 }

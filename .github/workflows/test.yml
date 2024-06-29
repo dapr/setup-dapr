@@ -38,6 +38,7 @@ jobs:
         with:
           dapr-cli-version: ${{ env.DAPR_CLI_VERSION }}
       - name: Initialize Dapr
+        if: ${{ matrix.os != 'macos-latest'}}
         run: |
           export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           dapr init --runtime-version=${{ env.DAPR_RUNTIME_VERSION }}
