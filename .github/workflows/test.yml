@@ -22,16 +22,23 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
+      - name: Load environment variables
+        uses: artursouza/export-env-action@v2
+        with:
+          envFile: './.github/env/global.env'
+          expand: 'true'
       # Test that the default version is used
-      - name: Install default version
+      - name: Setup Dapr CLI default version
         uses: ./
         if: ${{ matrix.os == 'windows-latest'}}
       # Test that explicit version is used
-      - name: Install specific version
+      - name: Setup Dapr CLI specific version
         uses: ./
         if: ${{ matrix.os != 'windows-latest'}}
         with:
-          dapr-cli-version: 1.13.0
-          dapr-runtime-version: 1.13.0
-      - name: Run Dapr Version
-        run: dapr --version
+          dapr-cli-version: ${{ env.DAPR_CLI_VERSION }}
+      - name: Initialize Dapr
+        run: |
+          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          dapr init --runtime-version=${{ env.DAPR_RUNTIME_VERSION }}
+          dapr --version 
