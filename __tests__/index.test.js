@@ -118,23 +118,26 @@ describe("downloadDapr", () => {
         },
       });
 
+    let error;
     try {
       // Act
       await action.downloadDapr("Darwin", "1.0.0");
-    } catch (error) {
-      // Restore mocks so the testing framework can use the fs functions
-      jest.restoreAllMocks();
-
-      // Assert
-      expect(error).toBeInstanceOf(Error);
-      expect(error).toHaveProperty(
-        "message",
-        "Dapr executable not found in path /dapr/",
-      );
-
-      // Number of calls should be zero because of the error
-      expect(extractTar).toHaveBeenCalledTimes(0);
+    } catch (err) {
+      error = err;
     }
+
+    // Restore mocks so the testing framework can use the fs functions
+    jest.restoreAllMocks();
+
+    // Assert
+    expect(error).toBeInstanceOf(Error);
+    expect(error).toHaveProperty(
+      "message",
+      "Dapr executable not found in path /dapr/",
+    );
+
+    // Number of calls should be zero because of the error
+    expect(extractTar).toHaveBeenCalledTimes(0);
   });
 
   test("should throw if fileList is empty", async () => {
@@ -149,22 +152,24 @@ describe("downloadDapr", () => {
     jest.spyOn(fs, "chmodSync").mockReturnValue();
     jest.spyOn(fs, "readdirSync").mockReturnValue([]);
 
+    let error;
     try {
       // Act
       await action.downloadDapr("Darwin", "1.0.0");
-    } catch (error) {
-      // Restore mocks so the testing framework can use the fs functions
-      jest.restoreAllMocks();
-
-      // Assert
-      expect(error).toBeInstanceOf(Error);
-      expect(error).toHaveProperty(
-        "message",
-        "Dapr executable not found in path /dapr/",
-      );
-
-      expect(extractTar).toHaveBeenCalledTimes(1);
+    } catch (err) {
+      error = err;
     }
+    // Restore mocks so the testing framework can use the fs functions
+    jest.restoreAllMocks();
+
+    // Assert
+    expect(error).toBeInstanceOf(Error);
+    expect(error).toHaveProperty(
+      "message",
+      "Dapr executable not found in path /dapr/",
+    );
+
+    expect(extractTar).toHaveBeenCalledTimes(1);
   });
 
   test("should throw on download failure", async () => {
@@ -173,22 +178,24 @@ describe("downloadDapr", () => {
 
     jest.spyOn(tc, "find").mockReturnValue();
     jest.spyOn(tc, "downloadTool").mockImplementation(() => {
-      throw "error";
+      throw new Error("error");
     });
 
+    let error;
     try {
       // Act
       await action.downloadDapr("Darwin", "1.0.0");
-    } catch (error) {
-      // Restore mocks so the testing framework can use the fs functions
-      jest.restoreAllMocks();
-
-      // Assert
-      expect(error).toBeInstanceOf(Error);
-      expect(error).toHaveProperty(
-        "message",
-        "Failed to download Dapr from location https://github.com/dapr/cli/releases/download/v1.0.0/dapr_darwin_amd64.tar.gz",
-      );
+    } catch (err) {
+      error = err;
     }
+    // Restore mocks so the testing framework can use the fs functions
+    jest.restoreAllMocks();
+
+    // Assert
+    expect(error).toBeInstanceOf(Error);
+    expect(error).toHaveProperty(
+      "message",
+      "Failed to download Dapr from location https://github.com/dapr/cli/releases/download/v1.0.0/dapr_darwin_amd64.tar.gz",
+    );
   });
 });
