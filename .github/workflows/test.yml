@@ -10,9 +10,9 @@ jobs:
   units:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: npm ci
-    - run: npm test
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm test
 
   # test action works running from the graph
   test:
@@ -21,16 +21,25 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
-    - uses: actions/checkout@v2
-    # Test that the default version is used
-    - name: Install default version
-      uses: ./
-      if: ${{ matrix.os == 'windows-latest'}}
-    # Test that explicit version is used
-    - name: Install specific version
-      uses: ./
-      if: ${{ matrix.os != 'windows-latest'}}
-      with:
-        version: 1.0.0
-    - name: Run Dapr
-      run: dapr --version
+      - uses: actions/checkout@v2
+      - name: Load environment variables
+        uses: artursouza/export-env-action@v2
+        with:
+          envFile: "./.github/env/global.env"
+          expand: "true"
+      # Test that the default version is used
+      - name: Setup Dapr CLI default version
+        uses: ./
+        if: ${{ matrix.os == 'windows-latest'}}
+      # Test that explicit version is used
+      - name: Setup Dapr CLI specific version
+        uses: ./
+        if: ${{ matrix.os != 'windows-latest'}}
+        with:
+          version: ${{ env.DAPR_CLI_VERSION }}
+      - name: Initialize Dapr
+        if: ${{ matrix.os == 'ubuntu-latest'}}
+        run: |
+          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          dapr init --runtime-version=${{ env.DAPR_RUNTIME_VERSION }}
+          dapr --version

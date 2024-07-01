@@ -7,7 +7,7 @@ This is how the action is used:
 
 - uses: dapr/setup-dapr@v1
   with:
-    version: '<version>' # default is 1.2.0
+    version: '<version>' # Dapr CLI version, e.g. '1.13.0'
   id: install
 
 */
